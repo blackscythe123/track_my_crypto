@@ -1,0 +1,22 @@
+[
+  {
+    "name": "addcoin",
+    "description": "Add a coin to your portfolio",
+    "usage": "/addcoin <coin_id> <amount>"
+  },
+  {
+    "name": "portfolio",
+    "description": "View your portfolio",
+    "usage": "/portfolio"
+  },
+  {
+    "name": "price",
+    "description": "Check price of a coin",
+    "usage": "/price <coin_id>"
+  },
+  {
+    "name": "reasons",
+    "description": "Find reasons for price movement",
+    "usage": "/reasons <coin_id>"
+  }
+]
