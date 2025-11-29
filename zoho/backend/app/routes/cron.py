@@ -15,14 +15,14 @@ bp = Blueprint('cron', __name__, url_prefix='/api/cron')
 @bp.route('/run-tasks', methods=['GET'])
 def run_scheduled_tasks():
     """
-    Endpoint to trigger background tasks (Wallet Sync, Price Check, Alerts).
-    Protected by a simple key check.
-    Usage: GET /api/cron/run-tasks?key=<YOUR_SECRET_KEY>
+    Endpoint to trigger background tasks.
+    Usage: GET /api/cron/run-tasks?key=mysecret123
     """
     # Security Check
     api_key = request.args.get('key')
-    # Use a specific CRON_KEY env var, or fallback to SECRET_KEY
-    expected_key = os.environ.get('CRON_KEY') or Config.SECRET_KEY
+    
+    # FIX: Match the variable name in config.py
+    expected_key = Config.CRON_SECRET 
     
     if not expected_key or api_key != expected_key:
         return jsonify({"error": "Unauthorized"}), 401
@@ -33,7 +33,6 @@ def run_scheduled_tasks():
         "alerts_sent": 0,
         "errors": []
     }
-
     # ---------------------------------------------------------
     # 1. SYNC WALLETS
     # ---------------------------------------------------------
@@ -140,3 +139,4 @@ def run_scheduled_tasks():
         return jsonify({"status": "partial_error", "results": results}), 500
 
     return jsonify({"status": "success", "results": results})
+
