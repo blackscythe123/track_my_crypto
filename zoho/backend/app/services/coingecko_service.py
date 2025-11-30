@@ -1,8 +1,13 @@
 import requests
 import time
+import os
 
 class CoinGeckoService:
     BASE_URL = "https://api.coingecko.com/api/v3"
+
+    @staticmethod
+    def _get_api_key():
+        return os.environ.get('COINGECKO_API_KEY')
 
     @staticmethod
     def get_prices(coin_ids):
@@ -37,6 +42,11 @@ class CoinGeckoService:
                 "ids": ids_str,
                 "price_change_percentage": "1h,24h"
             }
+            
+            # Add API Key if available
+            api_key = CoinGeckoService._get_api_key()
+            if api_key:
+                params["x_cg_demo_api_key"] = api_key
             
             try:
                 print(f"🔄 Fetching batch {i//BATCH_SIZE + 1} ({len(batch)} coins)...")
@@ -78,6 +88,11 @@ class CoinGeckoService:
         """
         url = f"{CoinGeckoService.BASE_URL}/search"
         params = {"query": query}
+        
+        # Add API Key if available
+        api_key = CoinGeckoService._get_api_key()
+        if api_key:
+            params["x_cg_demo_api_key"] = api_key
         
         try:
             response = requests.get(url, params=params, timeout=5)

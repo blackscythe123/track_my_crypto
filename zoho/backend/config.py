@@ -20,6 +20,7 @@ class Config:
     # API Keys
     NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
     COINGECKO_API_BASE = os.environ.get('COINGECKO_API_BASE', 'https://api.coingecko.com/api/v3')
+    COINGECKO_API_KEY = os.environ.get('COINGECKO_API_KEY')
     
     # AI Config
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')

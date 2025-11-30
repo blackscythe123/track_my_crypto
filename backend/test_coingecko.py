@@ -1,5 +1,9 @@
 import sys
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Add the current directory to sys.path so we can import app modules
 sys.path.append(os.getcwd())
