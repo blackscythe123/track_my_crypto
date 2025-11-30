@@ -50,6 +50,8 @@ class Config:
     # Added 'btc' to supported chains
     SUPPORTED_CHAINS = list(MORALIS_CHAINS.keys()) + ['sol', 'btc']
     
+    CRON_SECRET = os.environ.get('CRON_SECRET')
+
     @staticmethod
     def validate():
         missing = []

@@ -22,7 +22,7 @@ def run_scheduled_tasks():
     # Security Check
     api_key = request.args.get('key')
     # Use a specific CRON_KEY env var, or fallback to SECRET_KEY
-    expected_key = os.environ.get('CRON_KEY') or Config.SECRET_KEY
+    expected_key = Config.CRON_SECRET
     
     if not expected_key or api_key != expected_key:
         return jsonify({"error": "Unauthorized"}), 401
