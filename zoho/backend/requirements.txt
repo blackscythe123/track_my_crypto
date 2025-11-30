@@ -7,3 +7,4 @@ schedule
 gunicorn
 google-generativeai
 psycopg2-binary
+flask_cors
