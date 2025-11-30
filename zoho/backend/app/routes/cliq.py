@@ -219,7 +219,7 @@ def get_price(coin):
     emoji = "📈" if change >= 0 else "📉"
     
     return {
-        "text": f"💵 **{data.get('name').title()} ({data.get('symbol').upper()})**: ${price:,.2f} ({change:.2f}% {emoji})"
+        "text": f"💵 **{data.get('name').title()} ({data.get('symbol').upper()})**: ₹{price:,.2f} ({change:.2f}% {emoji})"
     }
 
 def get_portfolio(user):
@@ -247,7 +247,7 @@ def get_portfolio(user):
         chain = h.chain.upper() if h.chain else "MAN"
         
         if value > 0.01 or h.chain == 'manual':
-            report.append(f"`{symbol:<8} | {chain:<5} | ${price:<9,.2f} | {h.amount:<9.2f} | ${value:<10,.2f}`")
+            report.append(f"`{symbol:<8} | {chain:<5} | ₹{price:<9,.2f} | {h.amount:<9.2f} | ₹{value:<10,.2f}`")
 
     report.append(f"\n💰 **Total Value: ₹{total_value:,.2f}**")
     return {"text": "\n".join(report)}

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
         
-        document.getElementById('total-value').textContent = `$${data.total_value.toFixed(2)}`;
+        document.getElementById('total-value').textContent = `₹${data.total_value.toFixed(2)}`;
         
         const list = document.getElementById('holdings-list');
         list.innerHTML = '';
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${h.coin.toUpperCase()}</td>
-                <td>$${h.current_price}</td>
+                <td>₹${h.current_price}</td>
                 <td>${h.amount}</td>
-                <td>$${h.value.toFixed(2)}</td>
+                <td>₹${h.value.toFixed(2)}</td>
             `;
             list.appendChild(row);
         });
