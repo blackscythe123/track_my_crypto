@@ -1,0 +1,47 @@
+{
+  "platform_version": "1.0",
+  "acccess_level": "organization",
+  "widgets": [
+    {
+      "name": "Crypto Dashboard",
+      "location": "left_panel",
+      "url": "/widgets/dashboard.html"
+    }
+  ],
+  "commands": [
+    {
+      "name": "addcoin",
+      "hint": "Add a coin to your portfolio",
+      "description": "Usage: /addcoin <coin_id> <amount>",
+      "access_level": "everyone"
+    },
+    {
+      "name": "portfolio",
+      "hint": "View your portfolio",
+      "description": "View your current holdings and value",
+      "access_level": "everyone"
+    },
+    {
+      "name": "price",
+      "hint": "Check price of a coin",
+      "description": "Usage: /price <coin_id>",
+      "access_level": "everyone"
+    },
+    {
+      "name": "reasons",
+      "hint": "Find reasons for price movement",
+      "description": "Usage: /reasons <coin_id>",
+      "access_level": "everyone"
+    }
+  ],
+  "bot": {
+    "name": "CryptoBot",
+    "description": "Crypto Monitoring Bot",
+    "image": "https://www.zoho.com/cliq/images/default-bot.png",
+    "handlers": {
+       "message": "bot/participation_handler.js",
+       "context_handler": "bot/participation_handler.js",
+       "mention_handler": "bot/participation_handler.js"
+    }
+  }
+}

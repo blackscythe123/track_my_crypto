@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .up { color: green; }
+        .down { color: red; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+    </style>
+    <script src="https://js.zohostatic.com/cliq/v1/cliq.js"></script> <!-- Zoho Cliq SDK -->
+</head>
+<body>
+    <h2>My Crypto Portfolio</h2>
+    <div id="loading">Loading...</div>
+    <div id="content" style="display:none;">
+        <div class="card">
+            <h3>Total Value: <span id="total-value"></span></h3>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Coin</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="holdings-list"></tbody>
+        </table>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
