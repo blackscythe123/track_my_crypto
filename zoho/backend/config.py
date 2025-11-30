@@ -7,6 +7,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     
     # Database Config for Render (Postgres)
+    # Render uses 'postgres://' but SQLAlchemy requires 'postgresql://'
     database_url = os.environ.get('DATABASE_URL')
     if database_url and database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
@@ -33,6 +34,7 @@ class Config:
     
     # Moralis Config
     MORALIS_API_KEY = os.environ.get('MORALIS_API_KEY')
+    # Map friendly names to Moralis Hex Chain IDs
     MORALIS_CHAINS = {
         'eth': '0x1',
         'bsc': '0x38',
@@ -44,10 +46,8 @@ class Config:
         'base': '0x2105'
     }
     
+    # Added 'btc' to supported chains
     SUPPORTED_CHAINS = list(MORALIS_CHAINS.keys()) + ['sol', 'btc']
-
-    # --- MISSING LINE WAS HERE ---
-    CRON_SECRET = os.environ.get('CRON_SECRET')
     
     @staticmethod
     def validate():

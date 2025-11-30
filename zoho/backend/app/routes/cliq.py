@@ -229,24 +229,27 @@ def get_portfolio(user):
     report = [f"📊 **Portfolio Summary**"]
     total_value = 0
     
-    coin_ids = [h.coin_id for h in user.holdings]
+    # Ensure IDs are lowercase for API lookup
+    coin_ids = [h.coin_id.lower() for h in user.holdings]
     prices = CoinGeckoService.get_prices(coin_ids)
     
     # Explicitly includes HOLDING (Amount)
     report.append(f"`{'COIN':<8} | {'NET':<5} | {'PRICE':<9} | {'HOLDING':<9} | {'VALUE':<10}`")
     
     for h in user.holdings:
-        price = prices.get(h.coin_id, {}).get('current_price', 0)
+        # Lookup using lowercase ID
+        price_data = prices.get(h.coin_id.lower(), {})
+        price = price_data.get('current_price', 0)
         value = h.amount * price
         total_value += value
         
-        symbol = prices.get(h.coin_id, {}).get('symbol', h.coin_id).upper()
+        symbol = price_data.get('symbol', h.coin_id).upper()
         chain = h.chain.upper() if h.chain else "MAN"
         
         if value > 0.01 or h.chain == 'manual':
             report.append(f"`{symbol:<8} | {chain:<5} | ${price:<9,.2f} | {h.amount:<9.2f} | ${value:<10,.2f}`")
 
-    report.append(f"\n💰 **Total Value: ${total_value:,.2f}**")
+    report.append(f"\n💰 **Total Value: ₹{total_value:,.2f}**")
     return {"text": "\n".join(report)}
 
 def clear_portfolio(user):

@@ -14,12 +14,17 @@ class CoinGeckoService:
         if not coin_ids:
             return {}
             
-        # Remove duplicates
-        coin_ids = list(set(coin_ids))
+        # Remove duplicates and ensure lowercase
+        coin_ids = list(set([cid.lower() for cid in coin_ids]))
         
         # Batch size
         BATCH_SIZE = 50 
         result = {}
+        
+        # Headers to mimic a browser (helps with some WAFs)
+        headers = {
+            "User-Agent": "Mozilla/5.0"
+        }
         
         # Process in chunks
         for i in range(0, len(coin_ids), BATCH_SIZE):
@@ -28,14 +33,14 @@ class CoinGeckoService:
             
             url = f"{CoinGeckoService.BASE_URL}/coins/markets"
             params = {
-                "vs_currency": "usd",
+                "vs_currency": "inr",
                 "ids": ids_str,
                 "price_change_percentage": "1h,24h"
             }
             
             try:
                 print(f"🔄 Fetching batch {i//BATCH_SIZE + 1} ({len(batch)} coins)...")
-                response = requests.get(url, params=params, timeout=10)
+                response = requests.get(url, params=params, headers=headers, timeout=10)
                 
                 # --- NEW LOGIC: Fail Gracefully on Rate Limit ---
                 if response.status_code == 429:
