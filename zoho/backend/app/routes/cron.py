@@ -6,7 +6,7 @@ from app.services.news_service import NewsService
 from app.services.zoho_service import ZohoService
 from app.services.wallet_service import WalletService
 from config import Config
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import time
 
@@ -114,6 +114,15 @@ def run_scheduled_tasks():
                         if not user.default_channel_id: continue
                         
                         for alert in volatility_alerts:
+                            # Check Cooldown: Don't spam if we alerted this user about this coin recently (e.g. 6 hours)
+                            last_alert = Alert.query.filter_by(
+                                user_id=user.id, 
+                                coin_id=coin_id
+                            ).order_by(Alert.timestamp.desc()).first()
+                            
+                            if last_alert and (datetime.utcnow() - last_alert.timestamp) < timedelta(hours=6):
+                                continue
+
                             # Save Alert
                             new_alert = Alert(
                                 user_id=user.id,
