@@ -45,7 +45,24 @@ class ZohoService:
     @staticmethod
     def format_alert_message(coin, alert, reasons, current_price):
         change_emoji = "📈" if alert['change'] > 0 else "📉"
-        reasons_text = "\n".join([f"• [{r['title']}]({r['url']})" for r in reasons[:3]])
+        
+        slides = [
+            {
+                "type": "label",
+                "data": [
+                    {"label": "Price", "value": f"₹{current_price}"},
+                    {"label": "Change", "value": f"{alert['change']:.2f}%"}
+                ]
+            }
+        ]
+        
+        if reasons:
+            reasons_text = "\n".join([f"• [{r['title']}]({r['url']})" for r in reasons[:3]])
+            slides.append({
+                "type": "text",
+                "title": "Possible Reasons",
+                "data": reasons_text
+            })
         
         return {
             "text": f"🚨 **{coin.upper()} {alert['message']}**",
@@ -53,18 +70,5 @@ class ZohoService:
                 "title": f"{change_emoji} {coin.upper()} Alert",
                 "theme": "modern-inline"
             },
-            "slides": [
-                {
-                    "type": "label",
-                    "data": [
-                        {"label": "Price", "value": f"${current_price}"},
-                        {"label": "Change", "value": f"{alert['change']:.2f}%"}
-                    ]
-                },
-                {
-                    "type": "text",
-                    "title": "Possible Reasons",
-                    "data": reasons_text
-                }
-            ]
+            "slides": slides
         }

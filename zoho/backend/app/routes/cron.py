@@ -104,9 +104,10 @@ def run_scheduled_tasks():
                 if volatility_alerts:
                     # Fetch reasons (optional, can be skipped to save API calls)
                     reasons = []
-                    try:
-                        reasons = NewsService.get_reasons_for_movement(coin_id, volatility_alerts[0]['change'])
-                    except: pass
+                    # DISABLED to save API calls
+                    # try:
+                    #     reasons = NewsService.get_reasons_for_movement(coin_id, volatility_alerts[0]['change'])
+                    # except: pass
                     
                     # Notify Users
                     users_holding = User.query.join(Holding).filter(Holding.coin_id == coin_id).all()
